@@ -281,6 +281,11 @@
       "type": "object",
       "$ref": "raml-util/schemas/metadata.schema",
       "readonly": true
+    },
+    "deletedDate": {
+      "description": "Date and time when the record was deleted",
+      "type": "string",
+      "format": "date-time"
     }
   },
   "additionalProperties": false,

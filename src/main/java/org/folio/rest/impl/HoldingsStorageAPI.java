@@ -304,7 +304,7 @@ public class HoldingsStorageAPI implements HoldingsStorage {
 
                 if (holdingsList.size() == 1) {
                   final HoldingsRecord existingHoldings = holdingsList.get(0);
-                  if (Objects.equals(entity.getHrid(), existingHoldings.getHrid())) { 
+                  if (Objects.equals(entity.getHrid(), existingHoldings.getHrid())) {
                     try {
                       postgresClient.startTx(connection -> {
                         updateItemEffectiveCallNumbersByHoldings(connection, postgresClient, entity).setHandler(updateResult -> {

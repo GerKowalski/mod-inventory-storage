@@ -357,6 +357,11 @@
         "description": "Single UUID for the Instance nature of content",
         "$ref": "uuid.json"
       }
+    },
+    "deletedDate": {
+      "description": "Date and time when the record was deleted",
+      "type": "string",
+      "format": "date-time"
     }
   },
   "additionalProperties": false,
