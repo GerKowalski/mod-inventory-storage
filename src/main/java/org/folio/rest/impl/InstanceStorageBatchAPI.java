@@ -39,7 +39,7 @@ public class InstanceStorageBatchAPI implements InstanceStorageBatchInstances {
 
   private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-  private static final String INSTANCE_TABLE = "instance_view";
+  private static final String INSTANCE_TABLE = "instance";
   private static final String PARALLEL_DB_CONNECTIONS_LIMIT_KEY = "inventory.storage.parallel.db.connections.limit";
   private static final int PARALLEL_DB_CONNECTIONS_LIMIT = Integer.parseInt(MODULE_SPECIFIC_ARGS.getOrDefault(PARALLEL_DB_CONNECTIONS_LIMIT_KEY, "4"));
 
