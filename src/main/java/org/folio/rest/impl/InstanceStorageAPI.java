@@ -49,12 +49,13 @@ public class InstanceStorageAPI implements InstanceStorage {
   private static final String TENANT_HEADER = "x-okapi-tenant";
   public static final String MODULE = "mod_inventory_storage";
   public static final String INSTANCE_TABLE =  "instance";
+  public static final String INSTANCE_TABLE_VIEW =  "instance_view";
   private static final String INSTANCE_SOURCE_MARC_TABLE = "instance_source_marc";
   private static final String INSTANCE_RELATIONSHIP_TABLE = "instance_relationship";
   private final Messages messages = Messages.getInstance();
 
   PreparedCQL handleCQL(String query, int limit, int offset) throws FieldException {
-    return new PreparedCQL(INSTANCE_TABLE, query, limit, offset);
+    return new PreparedCQL(INSTANCE_TABLE_VIEW, query, limit, offset);
   }
 
   private static CQLWrapper createCQLWrapper(
@@ -62,7 +63,7 @@ public class InstanceStorageAPI implements InstanceStorage {
     int limit,
     int offset,
     String tableName) throws FieldException {
-    
+
     CQL2PgJSON cql2pgJson = new CQL2PgJSON(tableName + ".jsonb");
 
     return new CQLWrapper(cql2pgJson, query)
@@ -94,7 +95,7 @@ public class InstanceStorageAPI implements InstanceStorage {
       }
       return;
     }
-    PgUtil.streamGet(INSTANCE_TABLE, Instance.class, query, offset, limit, null,
+    PgUtil.streamGet(INSTANCE_TABLE_VIEW, Instance.class, query, offset, limit, null,
       "instances", routingContext, okapiHeaders, vertxContext);
   }
 
@@ -364,7 +365,7 @@ public class InstanceStorageAPI implements InstanceStorage {
     Handler<AsyncResult<Response>> asyncResultHandler,
     Context vertxContext) {
 
-    PgUtil.getById(INSTANCE_TABLE, Instance.class, instanceId, okapiHeaders, vertxContext,
+    PgUtil.getById(INSTANCE_TABLE_VIEW, Instance.class, instanceId, okapiHeaders, vertxContext,
         GetInstanceStorageInstancesByInstanceIdResponse.class, response -> {
           if (response.succeeded()) {
             if (response.result().getStatus() == 404) {
@@ -377,7 +378,7 @@ public class InstanceStorageAPI implements InstanceStorage {
                   .respond500WithTextPlain(response.result().getEntity())));
             } else {
               final Instance existingInstance = (Instance) response.result().getEntity();
-              if (Objects.equals(entity.getHrid(), existingInstance.getHrid())) { 
+              if (Objects.equals(entity.getHrid(), existingInstance.getHrid())) {
                 PgUtil.put(INSTANCE_TABLE, entity, instanceId, okapiHeaders, vertxContext,
                     PutInstanceStorageInstancesByInstanceIdResponse.class, asyncResultHandler);
               } else {
