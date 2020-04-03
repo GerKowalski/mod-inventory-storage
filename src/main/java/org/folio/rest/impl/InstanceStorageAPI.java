@@ -18,7 +18,6 @@ import org.folio.cql2pgjson.CQL2PgJSON;
 import org.folio.rest.jaxrs.model.Instance;
 import org.folio.rest.jaxrs.model.InstanceRelationship;
 import org.folio.rest.jaxrs.model.InstanceRelationships;
-import org.folio.rest.jaxrs.model.Instances;
 import org.folio.rest.jaxrs.model.MarcJson;
 import org.folio.rest.jaxrs.resource.InstanceStorage;
 import org.folio.rest.persist.PgExceptionUtil;
@@ -62,7 +61,7 @@ public class InstanceStorageAPI implements InstanceStorage {
     int limit,
     int offset,
     String tableName) throws FieldException {
-    
+
     CQL2PgJSON cql2pgJson = new CQL2PgJSON(tableName + ".jsonb");
 
     return new CQLWrapper(cql2pgJson, query)
@@ -80,20 +79,6 @@ public class InstanceStorageAPI implements InstanceStorage {
     Handler<AsyncResult<Response>> asyncResultHandler,
     Context vertxContext) {
 
-    if (PgUtil.checkOptimizedCQL(query, "title") != null) { // Until RMB-573 is fixed
-      try {
-        PreparedCQL preparedCql = handleCQL(query, limit, offset);
-        PgUtil.getWithOptimizedSql(preparedCql.getTableName(), Instance.class, Instances.class,
-          "title", query, offset, limit,
-          okapiHeaders, vertxContext, GetInstanceStorageInstancesResponse.class, asyncResultHandler);
-      } catch (Exception e) {
-        log.error(e.getMessage(), e);
-        asyncResultHandler.handle(io.vertx.core.Future.succeededFuture(
-          GetInstanceStorageInstancesResponse.
-            respond500WithTextPlain(e.getMessage())));
-      }
-      return;
-    }
     PgUtil.streamGet(INSTANCE_TABLE, Instance.class, query, offset, limit, null,
       "instances", routingContext, okapiHeaders, vertxContext);
   }
@@ -377,7 +362,7 @@ public class InstanceStorageAPI implements InstanceStorage {
                   .respond500WithTextPlain(response.result().getEntity())));
             } else {
               final Instance existingInstance = (Instance) response.result().getEntity();
-              if (Objects.equals(entity.getHrid(), existingInstance.getHrid())) { 
+              if (Objects.equals(entity.getHrid(), existingInstance.getHrid())) {
                 PgUtil.put(INSTANCE_TABLE, entity, instanceId, okapiHeaders, vertxContext,
                     PutInstanceStorageInstancesByInstanceIdResponse.class, asyncResultHandler);
               } else {
