@@ -64,7 +64,7 @@ public class InstanceBulkTest extends TestBaseWithInventoryUtil {
 
     client.get(getInstanceUrl, TENANT_ID, json(getCompleted));
 
-    Response response = getCompleted.get(5, SECONDS);
+    Response response = getCompleted.get(500, SECONDS);
     validateMoonsResponse(response, expectedMatches, moons);
   }
 
@@ -155,7 +155,7 @@ public class InstanceBulkTest extends TestBaseWithInventoryUtil {
     CompletableFuture<Response> getCompleted = new CompletableFuture<>();
     client.get(getInstanceUrl, TENANT_ID, json(getCompleted));
 
-    Response response = getCompleted.get(5, SECONDS);
+    Response response = getCompleted.get(50, SECONDS);
     validateMoonsResponse(response, expectedMatches, moons);
   }
 

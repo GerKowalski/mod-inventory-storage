@@ -22,6 +22,7 @@ import io.vertx.ext.web.RoutingContext;
 
 public class InstanceBulkAPI implements org.folio.rest.jaxrs.resource.InstanceBulk {
   public static final String INSTANCE_TABLE_VIEW = "instance_view";
+  public static final String INSTANCE_TABLE = "instance";
 
   private static final Logger LOG = LoggerFactory.getLogger(InstanceBulkAPI.class);
 
