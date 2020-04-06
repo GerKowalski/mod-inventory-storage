@@ -633,7 +633,7 @@ public class InstanceStorageTest extends TestBaseWithInventoryUtil {
   }
 
   @Test
-  public void canGetWithOptimizedSql(TestContext testContext) {
+  public void canGetWithApproximateResultsCount(TestContext testContext) {
     int n = PgUtil.getOptimizedSqlSize() / 2;
     PostgresClient pg = PostgresClient.getInstance(StorageTestSuite.getVertx(), TENANT_ID);
 
