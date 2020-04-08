@@ -420,6 +420,12 @@
           "removeAccents": true
         },
         {
+          "fieldName": "deleted_date",
+          "tOps": "ADD",
+          "caseSensitive": false,
+          "removeAccents": false
+        },
+        {
           "fieldName": "staffSuppress",
           "tOps": "ADD",
           "caseSensitive": false,

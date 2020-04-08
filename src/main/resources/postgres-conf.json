@@ -1,0 +1,7 @@
+{
+  "host":"localhost",
+  "port":5432,
+  "username":"folio_admin",
+  "password":"folio_admin",
+  "database":"okapi_modules"
+}
